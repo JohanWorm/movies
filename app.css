@@ -1,0 +1,7 @@
+.pull-right {
+  float: right;;
+}
+
+header ul {
+  display: inline-block;
+}
