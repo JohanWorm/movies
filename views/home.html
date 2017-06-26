@@ -1,5 +1,42 @@
-<div ng-include="'views/header.html'"></div>
+<div class="header">
 
-<div class="">
-  hola soy home
+  <h3>
+    SHOWS
+  </h3>
+
+  <ul class="pull-right">
+    <li>
+      <i class="fa fa-cog" aria-hidden="true"></i>
+    </li>
+    <li>
+      <i class="fa fa-search" aria-hidden="true" ng-click="showInput()"></i>
+    </li>
+  </ul>
+
+  <div>
+    <input type="text" ng-model="inputNameMovie" ng-if="viewInput" class="input-filter" ng-keyup="findMovie(inputNameMovie)" placeholder="Buscar película...">
+  </div>
+
+</div>
+
+
+<div class="home">
+
+  <div>
+    <ul ng-if="listMovies.length">
+      <li ng-repeat="movie in listMovies" ng-click="showDetail(movie)">
+        <figure>
+          <img ng-if="!movie.poster_path" src="https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="">
+          <img ng-if="movie.poster_path" src="https://image.tmdb.org/t/p/w640/{{movie.poster_path}}" alt="">
+        </figure>
+        <div class="title-movie">
+          {{movie.name}}
+        </div>
+      </li>
+    </ul>
+    <h3 ng-if="!listMovies.length">
+      No hay resultados
+    </h3>
+  </div>
+
 </div>

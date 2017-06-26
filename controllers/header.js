@@ -1,5 +1,6 @@
-moviesDatabase.controller("HeaderCtrl", ['$scope','$window',
-  function($scope,$window) {
-    alert("header");
+moviesDatabase.controller("HeaderCtrl", ['$scope','$window','theMoviedb',
+  function($scope,$window,theMoviedb) {
+    
+
   }
 ]);
