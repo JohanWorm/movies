@@ -1,85 +1,96 @@
-<div ng-include="'views/header.html'"></div>
+<div class="header">
+  <div class="back" ng-click="backView()">
+    <span>ATRAS</span>
+  </div>
+  <h3>
+    PELÍCULAS
+  </h3>
+</div>
 
 <div class="movie">
-
   <div class="container-movie">
-    <figure>
+    <div ng-if="mediaType=='tv' && !containerImage" class="btn-info" ng-click="changeViewTv(true)">
+      <i class="fa fa-info" aria-hidden="true"></i>
+    </div>
+    <div ng-if="mediaType=='tv' && containerImage" class="btn-info btn-back" ng-click="changeViewTv(false)">
+      <i class="fa fa-undo" aria-hidden="true"></i>
+    </div>
+    <figure ng-if="!containerImage">
       <img ng-if="!movie.poster_path" src="https://unamo.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="">
       <img ng-if="movie.poster_path" src="https://image.tmdb.org/t/p/w640/{{movie.poster_path}}" alt="">
     </figure>
-    <div class="title-movie">
-      {{movie.original_title}}
+    <div class="info-tv" ng-if="containerImage">
+      <h4>{{movie.name}}</h4>
+      <p>
+        {{movie.overview}}
+      </p>
+      <p>
+        <label><b>Generos: </b></label>
+        <span ng-repeat="genres in movie.genres track by $index">
+          {{genres.name}} <span ng-if="$index < movie.genres.length-1">-</span>
+        </span>
+      </p>
+      <p>
+        <label><b>Duración: </b></label>
+        <span>
+          {{movie.runtime}}m
+        </span>
+      </p>
+      <p>
+        <label><b>Votos: </b></label>
+        <span>
+          {{movie.vote_count}} - {{movie.vote_average}}
+        </span>
+      </p>
+    </div>
+    <div class="title-movie"  ng-if="!containerImage">
+      <h3 ng-if="mediaType!='tv'" class="text-uppercase">{{movie.title}}</h3>
+      <h3 ng-if="mediaType=='tv'" class="text-uppercase">{{movie.name}}</h3>
     </div>
   </div>
-
-  <div class="info-movie">
-    <h4>SEASONS</h4>
+  <div ng-if="mediaType!='tv'" class="info-movie">
+    <h2>{{movie.title}}</h2>
+    <h4>{{movie.tagline}}</h4>
+    <hr>
+    <p>
+      {{movie.overview}}
+    </p>
+    <p>
+      <label><b>Generos: </b></label>
+      <span ng-repeat="genres in movie.genres track by $index">
+        {{genres.name}} <span ng-if="$index < movie.genres.length-1">-</span>
+      </span>
+    </p>
+    <p>
+      <label><b>Duración: </b></label>
+      <span>
+        {{movie.runtime}}m
+      </span>
+    </p>
+    <p>
+      <label><b>Votos: </b></label>
+      <span>
+        {{movie.vote_count}} - {{movie.vote_average}}
+      </span>
+    </p>
+  </div>
+  <div ng-if="mediaType=='tv'" class="info-tv">
+    <h4>TEMPORADAS</h4>
     <ul>
-      <li>1</li>
-      <li>2</li>
-      <li>3</li>
-      <li>4</li>
-      <li>5</li>
-      <li>6</li>
+      <li ng-repeat="season in movie.seasons track by $index" ng-click="findEpisodies(movie.id, season.season_number)" >{{$index + 1}}</li>
     </ul>
-    <div class="chapters">
-      <div class="row">
+    <div class="seasons">
+      <div class="row" ng-repeat="data in episodes.episodes track by $index">
         <div>
-          1
+          {{$index + 1}}
         </div>
         <div>
-          The title of movie fsafasfa sfa
-        </div>
-        <div>
-          <div class="check"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          1
-        </div>
-        <div>
-          The title of movie fsafasfa sfa
-        </div>
-        <div>
-          <div class="check"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          1
-        </div>
-        <div>
-          The title of movie fsafasfa sfa
-        </div>
-        <div>
-          <div class="check"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          1
-        </div>
-        <div>
-          The title of movie fsafasfa sfa
-        </div>
-        <div>
-          <div class="check"></div>
-        </div>
-      </div>
-      <div class="row">
-        <div>
-          1
-        </div>
-        <div>
-          The title of movie fsafasfa sfa
+          {{data.name}}
         </div>
         <div>
           <div class="check"></div>
         </div>
       </div>
     </div>
-
   </div>
-
 </div>

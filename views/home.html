@@ -1,9 +1,7 @@
 <div class="header">
-
   <h3>
-    SHOWS
+    PELÍCULAS
   </h3>
-
   <ul class="pull-right">
     <li>
       <i class="fa fa-cog" aria-hidden="true"></i>
@@ -12,16 +10,12 @@
       <i class="fa fa-search" aria-hidden="true" ng-click="showInput()"></i>
     </li>
   </ul>
-
   <div>
-    <input type="text" ng-model="inputNameMovie" ng-if="viewInput" class="input-filter" ng-keyup="findMovie(inputNameMovie)" placeholder="Buscar película...">
+    <input type="text" ng-model="inputNameMovie" validate-char ng-if="viewInput" class="input-filter" ng-keyup="findMovie(inputNameMovie)" placeholder="Buscar película...">
   </div>
-
 </div>
 
-
 <div class="home">
-
   <div>
     <ul ng-if="listMovies.length">
       <li ng-repeat="movie in listMovies" ng-click="showDetail(movie)">
@@ -30,7 +24,7 @@
           <img ng-if="movie.poster_path" src="https://image.tmdb.org/t/p/w640/{{movie.poster_path}}" alt="">
         </figure>
         <div class="title-movie">
-          {{movie.name}}
+          {{movie.title}}
         </div>
       </li>
     </ul>
@@ -38,5 +32,4 @@
       No hay resultados
     </h3>
   </div>
-
 </div>

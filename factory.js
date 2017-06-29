@@ -2,72 +2,66 @@ var hostTheMoviedb = "https://api.themoviedb.org/3/";
 var api = "?api_key=b2907782d07859a652052d3bae537475&language=es-ES";
 
 moviesDatabase.factory('theMoviedb', function($http) {
+  //JSON all services
   var _theMoviedbFactory = {};
+  //JSON movie or tv
   var movie = {};
-
+  //URL services get list movies
   var listMovies = hostTheMoviedb+"discover/movie"+api+"&sort_by=popularity.desc&include_adult=false&include_video=false&language=es-ES&page=1";
+  //URL services filter get movies and tv
   var listFilterMovies = hostTheMoviedb+"search/multi"+api+"&query=";
+  //URL services get detail movie
   var detaileMovie = hostTheMoviedb+"movie/";
+  //URL services get detail tv
+  var detaileTv = hostTheMoviedb+"tv/";
 
+  //services get list movies
   _theMoviedbFactory.loadMovies = function() {
     return $http.get(listMovies);
   };
 
+  //services filter get movies and tv
   _theMoviedbFactory.findMovie = function(data) {
     return $http.get(listFilterMovies+data);
   };
 
-  _theMoviedbFactory.setMovieId = function(data) {
+  //save data movie or tv in JSON
+  _theMoviedbFactory.setMovie = function(data) {
     console.log(data);
-    movie.id = data.id;
+    movie = data;
   };
 
-  _theMoviedbFactory.getMovieId = function(data) {
-    return movie.id;
-  };
-
-  _theMoviedbFactory.detaileMovie = function(){
-    return $http.get(detaileMovie+_theMoviedbFactory.getMovieId()+api);
-  }
-
-  return _theMoviedbFactory;
-});
-
-
-moviesDatabase.factory('movies', function($http) {
-  var _moviesFactory = {};
-  var movies = [];
-  var movie = {};
-
-  _moviesFactory.setMovies = function(data) {
-    movies = data;
-  };
-
-  _moviesFactory.getMovies = function() {
-    return movies;
-  };
-
-  _moviesFactory.setMovie = function(data) {
-    movie.adult = data.adult;
-    movie.backdrop_path = data.backdrop_path;
-    movie.genre_ids = data.genre_ids;
-    movie.id = data.id;
-    movie.media_type = data.media_type;
-    movie.original_language = data.original_language;
-    movie.original_title = data.original_title;
-    movie.overview = data.overview;
-    movie.popularity = data.popularity;
-    movie.poster_path = data.poster_path;
-    movie.release_date = data.release_date;
-    movie.title = data.title;
-    movie.video = data.video;
-    movie.vote_average = data.vote_average;
-    movie.vote_count = data.vote_count;
-  };
-
-  _moviesFactory.getMovie = function() {
+  //return data JSON movie or tv
+  _theMoviedbFactory.getMovie = function(data) {
     return movie;
   };
 
-  return _moviesFactory;
+  //save media type
+  _theMoviedbFactory.setMediaType = function(data) {
+    console.log(data);
+    movie.media_type = data.media_type;
+  };
+
+  //return media type
+  _theMoviedbFactory.getMediaType = function(data) {
+    return movie.media_type;
+  };
+
+  //services get detail movie
+  _theMoviedbFactory.detaileMovie = function(id){
+    return $http.get(detaileMovie+id+api);
+  }
+
+  //services get detail tv
+  _theMoviedbFactory.detaileTv = function(id){
+    return $http.get(detaileTv+id+api);
+  }
+
+  //services get detail tv
+  _theMoviedbFactory.detaileSeason = function(id, data){
+    return $http.get(detaileTv+id+"/season/"+data+api);
+  }
+
+  return _theMoviedbFactory;
+
 });
