@@ -1,1 +1,1 @@
-# Movies projct create by Johan Cuberos
+# Movies project create by Johan Cuberos
